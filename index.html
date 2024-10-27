@@ -13,10 +13,15 @@
             background-color: #0d1117;
             color: #c9d1d9;
             font-family: 'Arial', sans-serif;
+            padding-top: 50px;
         }
 
         .navbar {
             background-color: #161b22;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         .navbar-brand,
@@ -91,23 +96,120 @@
             margin: 0;
         }
 
-        /* Responsive contact form styles */
         .contact-form {
             display: flex;
-            flex-direction: column; /* Stack fields vertically */
-            align-items: center; /* Center align */
-            gap: 15px; /* Space between fields */
-            max-width: 400px; /* Max width for the form */
-            margin: 0 auto; /* Center the form horizontally */
-            text-align: left; /* Align labels and text to the left */
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
         }
 
         .contact-form .form-group {
-            width: 100%; /* Full width for inputs */
+            width: 100%;
         }
 
         .contact-form .form-control {
-            width: 100%; /* Ensure inputs take full width */
+            width: 100%;
+        }
+
+        .project-card {
+            height: 100%;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card {
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+
+        .card-title {
+            color: #343a40;
+        }
+
+        .card-text {
+            color: #6c757d;
+        }
+
+        #skills {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .carousel-item img {
+            max-width: 80%;
+            height: auto;
+            margin: auto;
+        }
+
+        .carousel-item {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h5 {
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .quick-links,
+        .follow-me,
+        .contact-info {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+        }
+
+        .quick-links ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .quick-links li {
+            margin: 5px 0;
+        }
+
+        .quick-links a {
+            color: #61dafb;
+            text-decoration: none;
+        }
+
+        .quick-links a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -123,6 +225,15 @@
 
     <script type="text/babel">
         const App = () => {
+            const [animated, setAnimated] = React.useState(false);
+
+            React.useEffect(() => {
+                const timer = setTimeout(() => {
+                    setAnimated(true);
+                }, 100); 
+
+                return () => clearTimeout(timer);
+            }, []);
 
             const scrollToContact = () => {
                 document.getElementById("contactForm").scrollIntoView({ behavior: "smooth" });
@@ -140,12 +251,12 @@
             };
 
             return (
-                <div className="container py-5">
+                <div className={`container py-5 ${animated ? 'animated' : ''}`}>
                     {/* Navbar */}
                     <header className="mb-5">
                         <nav className="navbar navbar-expand-lg navbar-dark">
                             <div className="container-fluid">
-                                <a className="navbar-brand" href="index.html">Kirtan Mathukiya</a>
+                                <a className="navbar-brand" href="index.html">Kirtan Mathukiya's Portfolio</a>
                                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="navbar-toggler-icon"></span>
                                 </button>
@@ -164,7 +275,10 @@
                                             <a className="nav-link" href="#projects">Projects</a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link" href="#contact">Contact Information</a>
+                                            <a className="nav-link" href="#work-experience">Work-experience</a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#contactForm">Contact Me</a>
                                         </li>
                                     </ul>
                                     {/* Social Media Icons in Navbar */}
@@ -189,60 +303,189 @@
                         <img src="my.png" alt="Profile" className="profile-pic mb-3" />
                         <h1>Hi, I'm Kirtan</h1>
                         <p>Software Developer</p>
-                        <p>I have extensive experience in software development, focusing on creating high-quality applications and solutions.</p>
-                        <button className="btn btn-primary mt-3">Contact Me</button>
-                        <a href="Kirtan_Resume_.pdf" className="btn btn-secondary mt-3 ms-2" download>Download Resume</a>
+                        <p>"I have a strong interest in software development and have been learning how to create good applications and solutions."</p>
+                        <a href="#projects" className="btn btn-primary mt-3">Explore My Projects</a>
                     </section>
 
                     {/* Summarizing Statement */}
                     <section id="about">
                         <h2>About Me</h2>
-                        <p>
-                            I am a software developer with experience in building applications that solve real-world problems. I am proficient in various programming languages and frameworks, allowing me to deliver effective solutions.
-                        </p>
+                        <p>Hi, I’m Kirtan Mathukiya, a passionate Software Developer with a focus on Front-End Development. I specialize in creating user-friendly interfaces and high-quality applications that solve real-world problems. Currently, I am enhancing my skills in React.js to build dynamic web applications. I enjoy collaborating on projects that allow me to contribute my expertise while exploring new technologies and creative web designs in my free time.</p>
+                        <div class="row">
+                            <div class="col">
+                                <div class="count">02+</div>
+                                <p>Years experience</p>
+                            </div>
+                            <div class="col">
+                                <div class="count">07+</div>
+                                <p>Completed certifications</p>
+                            </div>
+                            <div class="col">
+                                <div class="count">02+</div>
+                                <p>Companies worked</p>
+                            </div>
+                        </div>
+                        <a href="Kirtan_Resume_.pdf" class="btn-download">Download Resume <i class="fas fa-download"></i></a>
                     </section>
 
                     {/* Education */}
                     <section id="education">
                         <h2>Education</h2>
-                        <p><strong>Computer System Technician – Software Support</strong>, Mohawk College, Hamilton, Ontario (September 2022 - December 2024)</p>
+                        <p><strong>Computer System Technician – Software Support</strong>, (September 2022 - December 2024)</p>
+                        <p>Mohawk College, Hamilton, Ontario</p>
                     </section>
 
                     {/* Skills */}
-                    <section id="skills">
-                        <h2>Skills</h2>
-                        <ul className="list-unstyled">
-                            <li>Languages: Java, Python, C#, JavaScript, HTML5, C/C++</li>
-                            <li>Frameworks: ReactJs, Bootstrap5, CSS, JavaFx, MySQL</li>
-                            <li>Knowledge of REST API</li>
-                            <li>Development Tools: MS Visual Studio Code, IntelliJ, IDEs</li>
-                            <li>Agile Development, SDLC life cycle</li>
-                            <li>Proficient in Microsoft Office Suite (Excel, Word, Outlook)</li>
-                        </ul>
+                    <section id="skills" className="my-5">
+                        <h2 className="text-center mb-4">Skills</h2>
+                        <div id="skillsCarousel" className="carousel slide" data-bs-ride="carousel">
+                            <div className="carousel-inner">
+                                <div className="carousel-item active">
+                                    <div className="row text-center">
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/java-coffee-cup-logo.png" alt="Java" className="img-fluid" />
+                                            <p>Java</p>
+                                        </div>
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/python--v1.png" alt="Python" className="img-fluid" />
+                                            <p>Python</p>
+                                        </div>
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/c-sharp-logo.png" alt="C#" className="img-fluid" />
+                                            <p>C#</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="carousel-item">
+                                    <div className="row text-center">
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/javascript.png" alt="JavaScript" className="img-fluid" />
+                                            <p>JavaScript</p>
+                                        </div>
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/html-5.png" alt="HTML5" className="img-fluid" />
+                                            <p>HTML5</p>
+                                        </div>
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/c-plus-plus-logo.png" alt="C/C++" className="img-fluid" />
+                                            <p>C/C++</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="carousel-item">
+                                    <div className="row text-center">
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/react-native.png" alt="React" className="img-fluid" />
+                                            <p>ReactJS</p>
+                                        </div>
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/bootstrap.png" alt="Bootstrap 5" className="img-fluid" />
+                                            <p>Bootstrap 5</p>
+                                        </div>
+                                        <div className="col-4">
+                                            <img src="https://img.icons8.com/color/96/000000/css3.png" alt="CSS" className="img-fluid" />
+                                            <p>CSS</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button className="carousel-control-prev" type="button" data-bs-target="#skillsCarousel" data-bs-slide="prev">
+                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span className="visually-hidden">Previous</span>
+                            </button>
+                            <button className="carousel-control-next" type="button" data-bs-target="#skillsCarousel" data-bs-slide="next">
+                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span className="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        <div className="mt-4">
+                            <ul className="list-unstyled text-center">
+                                <li>Knowledge of REST API</li>
+                                <li>Development Tools: MS Visual Studio Code, IntelliJ, IDEs</li>
+                                <li>Agile Development, SDLC life cycle</li>
+                                <li>Proficient in Microsoft Office Suite (Excel, Word, Outlook)</li>
+                            </ul>
+                        </div>
                     </section>
 
                     {/* Work Experience */}
-                    <section id="work-experience">
-                        <h2>Work Experience</h2>
-                        <p><strong>Software Development Intern</strong>, Tech Solutions Inc., Hamilton, Ontario (January 2024 – May 2024)</p>
-                        <ul>
-                            <li>Collaborated on designing and implementing new features for a web application, following Agile development methodologies.</li>
-                            <li>Utilized Java and Python to develop efficient and scalable code, enhancing the software product's functionality.</li>
-                            <li>Participated in code reviews and debugging sessions, refining problem-solving skills and attention to detail in software development processes.</li>
-                        </ul>
-                        <p><strong>IT Helpdesk Executive</strong>, BeeKayIT NetSec Solutions Pvt Ltd., Ahmedabad, Gujarat, India (January 2022 – July 2022)</p>
-                        <ul>
-                            <li>Provided frontline technical support to internal employees and external clients via phone, email, and ticketing system.</li>
-                            <li>Troubleshoot hardware and software issues, escalating complex problems for prompt resolution.</li>
-                            <li>Managed and prioritized support tickets, contributing to the smooth operation of IT services.</li>
-                        </ul>
+                    <section id="work-experience" className="my-5">
+                        <h2 className="text-center mb-4">Work Experience</h2>
+                        <div id="workExperienceCarousel" className="carousel slide" data-bs-ride="carousel">
+                            <div className="carousel-inner">
+                                <div className="carousel-item active text-center">
+                                    <h5><strong>Software Development Intern</strong></h5>
+                                    <p>Tech Solutions Inc., Hamilton, Ontario (January 2024 – May 2024)</p>
+                                    <ul className="list-unstyled">
+                                        <li>Collaborated on designing and implementing new features for a web application, following Agile development methodologies.</li>
+                                        <li>Utilized Java and Python to develop efficient and scalable code, enhancing the software product's functionality.</li>
+                                        <li>Participated in code reviews and debugging sessions, refining problem-solving skills and attention to detail in software development processes.</li>
+                                    </ul>
+                                </div>
+                                <div className="carousel-item text-center">
+                                    <h5><strong>IT Helpdesk Executive</strong></h5>
+                                    <p>BeeKayIT NetSec Solutions Pvt Ltd., Ahmedabad, Gujarat, India (January 2022 – July 2022)</p>
+                                    <ul className="list-unstyled">
+                                        <li>Provided frontline technical support to internal employees and external clients via phone, email, and ticketing system.</li>
+                                        <li>Troubleshot hardware and software issues, escalating complex problems for prompt resolution.</li>
+                                        <li>Managed and prioritized support tickets, contributing to the smooth operation of IT services.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button className="carousel-control-prev" type="button" data-bs-target="#workExperienceCarousel" data-bs-slide="prev">
+                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span className="visually-hidden">Previous</span>
+                            </button>
+                            <button className="carousel-control-next" type="button" data-bs-target="#workExperienceCarousel" data-bs-slide="next">
+                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span className="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </section>
 
                     {/* Projects */}
-                    <section id="projects">
-                        <h2>Projects</h2>
-                        <p><strong>Car Repair Hub:</strong> Crafted an immersive online platform for car enthusiasts and repair aficionados, blending JavaScript, HTML5, and CSS/Bootstrap 5. <a href="#" target="_blank">Explore the hub</a></p>
-                        <p><strong>Task Management System:</strong> Developed a task management system to streamline project organization and communication within the development team. Implemented features such as task assignment, progress tracking, and notification alerts using Java and Python.</p>
+                    <section id="projects" className="my-5">
+                        <h2 className="text-center mb-4">Projects</h2>
+                        <div className="row g-4">
+                            <div className="col-md-6 col-lg-4">
+                                <div className="card">
+                                    <img src="p2.png" className="card-img-top" alt="Car Repair Hub" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">Car Repair Hub</h5>
+                                        <p className="card-text">
+                                            Crafted an immersive online platform for car enthusiasts and repair aficionados, blending JavaScript, HTML5, and CSS/Bootstrap 5.
+                                        </p>
+                                        <a href="https://kirtanmathukiya.github.io/CarGaragre/" className="btn btn-primary">Explore the Hub</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 col-lg-4">
+                                <div className="card shadow-sm border-0">
+                                    <img src="p1.png" className="card-img-top" alt="Watch Website" />
+                                    <div className="card-body">
+                                        <h5 className="card-title text-dark">Watch Website</h5>
+                                        <p className="card-text text-muted">
+                                            Developed an elegant and user-friendly watch e-commerce website, showcasing various styles and functionalities with a focus on responsiveness and aesthetics.
+                                        </p>
+                                        <a href="https://kirtanmathukiya.github.io/WatchWebsite.github.io/" className="btn btn-primary">Visit the Website</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 col-lg-4">
+                                <div className="card shadow-sm border-0">
+                                    <img src="p3.png" className="card-img-top" alt="Car Dodge Game" />
+                                    <div className="card-body">
+                                        <h5 className="card-title text-dark">Car Dodge Game</h5>
+                                        <p className="card-text text-muted">
+                                            Created an exciting car dodge game using HTML5, JavaScript, and CSS/Bootstrap 5, offering an engaging gameplay experience with intuitive controls and vibrant graphics.
+                                        </p>
+                                        <a href="https://www.youtube.com/watch?v=eGjgdGyEHJ0" className="btn btn-primary">Youtube Link</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </section>
 
                     {/* Contact Form Section */}
@@ -268,11 +511,19 @@
                     {/* Footer */}
                     <footer>
                         <div className="footer-content">
-                            <div>
-                                <h5>About</h5>
-                                <p>A brief overview of who I am and what I do.</p>
+                            <div className="quick-links">
+                                <h5>Quick Links</h5>
+                                <ul>
+                                    <li><a href="#home">Home</a></li>
+                                    <li><a href="#about">About</a></li>
+                                    <li><a href="#education">Education</a></li>
+                                    <li><a href="#skills">Skills</a></li>
+                                    <li><a href="#projects">Projects</a></li>
+                                    <li><a href="#work-experience">Work Experience</a></li>
+                                    <li><a href="#contactForm">Contact Me</a></li>
+                                </ul>
                             </div>
-                            <div>
+                            <div className="follow-me">
                                 <h5>Follow Me</h5>
                                 <div className="social-icons">
                                     <a href="https://www.linkedin.com/in/kirtan-mathukiya-160381292/" target="_blank" aria-label="LinkedIn">
@@ -286,14 +537,25 @@
                                     </a>
                                 </div>
                             </div>
-                            <div>
+                            <div className="contact-info">
                                 <h5>Contact</h5>
-                                <p>Email: <a href="mailto:kirtanmathukiya@gmail.com">kirtanmathukiya@gmail.com</a></p>
-                                <p>Phone: <a href="tel:+1234567890">+1 234 567 8910</a></p>
+                                <p>
+                                    <i className="fas fa-envelope"> </i>
+                                    : <a href="mailto:kirtanmathukiya@gmail.com">kirtanmathukiya@gmail.com</a>
+                                </p>
+                                <p>
+                                    <i className="fas fa-phone"> </i>
+                                    : <a href="tel:+12345678910">+1 234 567 8910</a>
+                                </p>
+                                <p>
+                                    <i className="fas fa-map-marker-alt"> </i>
+                                    : Hamilton, ON, Canada
+                                </p>
                             </div>
                         </div>
                         <p>&copy; 2024 Kirtan Mathukiya. All rights reserved.</p>
                     </footer>
+
                 </div>
             );
         };
